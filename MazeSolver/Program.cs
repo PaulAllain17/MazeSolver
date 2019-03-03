@@ -7,7 +7,9 @@ namespace MazeSolver
         static void Main(string[] args)
         {
             var reader = new Reader();
-            var test = reader.ReadFile();
+            var maze = reader.ReadFile();
+            var solver = new Solver(maze);
+            solver.Solve();
             Console.WriteLine("Type key to exit.");
             Console.ReadKey();
         }
