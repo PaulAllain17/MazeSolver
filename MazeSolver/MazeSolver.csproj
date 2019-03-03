@@ -49,5 +49,15 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
+  <ItemGroup>
+    <Content Include="README.txt" />
+    <Content Include="Samples\input.txt" />
+    <Content Include="Samples\large_input.txt" />
+    <Content Include="Samples\medium_input.txt" />
+    <Content Include="Samples\small_input.txt" />
+    <Content Include="Samples\small_wrap_input.txt" />
+    <Content Include="Samples\sparse_large.txt" />
+    <Content Include="Samples\sparse_medium.txt" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
