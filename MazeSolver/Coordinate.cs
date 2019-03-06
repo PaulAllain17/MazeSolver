@@ -29,24 +29,24 @@ namespace MazeSolver
             return false;
         }
 
-        public void Up()
+        public Coordinate Up()
         {
-            y += 1;
+            return new Coordinate(x, y + 1);
         }
 
-        public void Down()
+        public Coordinate Down()
         {
-            y -= 1;
+            return new Coordinate(x, y - 1);
         }
 
-        public void Right()
+        public Coordinate Right()
         {
-            x += 1;
+            return new Coordinate(x + 1, y);
         }
 
-        public void Left()
+        public Coordinate Left()
         {
-            x -= 1;
+            return new Coordinate(x - 1, y);
         }
     }
 }

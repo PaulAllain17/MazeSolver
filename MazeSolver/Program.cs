@@ -8,6 +8,7 @@ namespace MazeSolver
     {
         static void Main(string[] args)
         {
+            Console.WindowWidth = 200;
             var reader = new Reader();
             var maze = reader.ReadFile();
             Console.WriteLine($"Start: {maze.Start.x} {maze.Start.y}");

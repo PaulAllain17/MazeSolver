@@ -6,10 +6,12 @@ namespace MazeSolver
     public class Solver2
     {
         private Maze _maze;
+        private Reader _reader;
 
         public Solver2(Maze maze)
         {
             _maze = maze;
+            _reader = new Reader();
         }
 
         public List<Coordinate> Solve()
@@ -28,39 +30,43 @@ namespace MazeSolver
 
             if (UpIsValid(currentLocation))
             {
-                currentLocation.Up();
-                MarkAsVisited(currentLocation);
-                var location = RecursiveMaze(currentLocation);
+                var newPosition = currentLocation.Up();
+                MarkAsVisited(newPosition);
+                var location = RecursiveMaze(newPosition);
                 if (location.Equals(_maze.End))
                     return location;
             }
 
             if (DownIsValid(currentLocation))
             {
-                currentLocation.Down();
-                MarkAsVisited(currentLocation);
-                var location = RecursiveMaze(currentLocation);
+                var newPosition = currentLocation.Down();
+                MarkAsVisited(newPosition);
+                var location = RecursiveMaze(newPosition);
                 if (location.Equals(_maze.End))
                     return location;
             }
 
             if (RightIsValid(currentLocation))
             {
-                currentLocation.Right();
-                MarkAsVisited(currentLocation);
-                var location = RecursiveMaze(currentLocation);
+                var newPosition = currentLocation.Right();
+                MarkAsVisited(newPosition);
+                var location = RecursiveMaze(newPosition);
                 if (location.Equals(_maze.End))
                     return location;
             }
 
+            //_reader.Display(new List<Coordinate>(), _maze);
+
             if (LeftIsValid(currentLocation))
             {
-                currentLocation.Left();
-                MarkAsVisited(currentLocation);
-                var location = RecursiveMaze(currentLocation);
+                var newPosition = currentLocation.Left();
+                MarkAsVisited(newPosition);
+                var location = RecursiveMaze(newPosition);
                 if (location.Equals(_maze.End))
                     return location;
             }
+
+            //_reader.Display(new List<Coordinate>(), _maze);
 
             return currentLocation;
         }

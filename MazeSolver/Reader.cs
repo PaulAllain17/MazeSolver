@@ -9,7 +9,7 @@ namespace MazeSolver
     {
         public Maze ReadFile()
         {
-            var lines = File.ReadLines("../.././Samples/medium_input.txt").ToList();
+            var lines = File.ReadLines("../.././Samples/large_input.txt").ToList();
             return CreateMaze(lines);
         }
 
