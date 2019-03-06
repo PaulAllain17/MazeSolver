@@ -13,7 +13,7 @@ namespace MazeSolver
             y = y1;
         }
 
-        public bool isWall(List<List<int>> structure)
+        public bool IsWall(List<List<int>> structure)
         {
             if (structure[y][x] == 1)
                 return true;

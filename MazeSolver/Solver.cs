@@ -124,15 +124,7 @@ namespace MazeSolver
 
         private bool NextMove(Coordinate end, int width, int height, List<List<int>> structure, List<Coordinate> path, Coordinate newPosition)
         {
-            if (newPosition.Equals(_maze.Start))
-                return false;
-
-            if (newPosition.isWall(structure))
-                return false;
-
-            var origin = path.LastOrDefault();
-            if (newPosition.Equals(origin))
-                return false;
+            if (!IsValidPosition(structure, path, newPosition)) return false;
 
             path.Add(newPosition);
 
@@ -160,6 +152,18 @@ namespace MazeSolver
             return false;
         }
 
-        
+        private bool IsValidPosition(List<List<int>> structure, List<Coordinate> path, Coordinate newPosition)
+        {
+            if (newPosition.Equals(_maze.Start))
+                return false;
+
+            if (newPosition.IsWall(structure))
+                return false;
+
+            var origin = path.LastOrDefault();
+            if (newPosition.Equals(origin))
+                return false;
+            return true;
+        }
     }
 }
