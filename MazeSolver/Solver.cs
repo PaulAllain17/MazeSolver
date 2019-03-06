@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Collections.Generic;
 
 namespace MazeSolver
 {
@@ -15,154 +13,148 @@ namespace MazeSolver
 
         public List<Coordinate> Solve()
         {
-            if (!StartIsValid())
-                return new List<Coordinate>();
-
-            var path = new List<Coordinate>();
-
-            var finished = MoveUp(_maze.Start, _maze.End, _maze.Width, _maze.Height, _maze.Structure, path);
-            if (finished)
-            {
-                return path;
-            }
-
-            finished = MoveDown(_maze.Start, _maze.End, _maze.Width, _maze.Height, _maze.Structure, path);
-            if (finished)
-            {
-                return path;
-            }
-
-            finished = MoveRight(_maze.Start, _maze.End, _maze.Width, _maze.Height, _maze.Structure, path);
-            if (finished)
-            {
-                return path;
-            }
-
-            var pathLeft = MoveLeft(_maze.Start, _maze.End, _maze.Width, _maze.Height, _maze.Structure, path);
-            if (finished)
-            {
-                return path;
-            }
+            var location = RecursiveMaze(_maze.Start);
 
             return new List<Coordinate>();
         }
 
-        private bool StartIsValid()
+        private Coordinate RecursiveMaze(Coordinate currentLocation)
         {
-            if (_maze.Start.x >= _maze.Width || _maze.Start.y >= _maze.Height)
-                return false;
+            if (currentLocation.Equals(_maze.End))
+                return currentLocation;
 
-            if (_maze.Structure[_maze.Start.y][_maze.Start.x] == 1)
-                return false;
+            if (UpIsValid(currentLocation))
+            {
+                var newPosition = currentLocation.Up();
+                if (Move(newPosition, out var location)) return location;
+            }
 
-            return true;
+            if (DownIsValid(currentLocation))
+            {
+                var newPosition = currentLocation.Down();
+                if (Move(newPosition, out var location)) return location;
+            }
+
+            if (RightIsValid(currentLocation))
+            {
+                var newPosition = currentLocation.Right();
+                if (Move(newPosition, out var location)) return location;
+            }
+
+            if (LeftIsValid(currentLocation))
+            {
+                var newPosition = currentLocation.Left();
+                if (Move(newPosition, out var location)) return location;
+            }
+
+            return currentLocation;
         }
 
-        private bool MoveUp(Coordinate currentPosition, Coordinate end, int width, int height,
-            List<List<int>> structure, List<Coordinate> path)
+        private bool Move(Coordinate newPosition, out Coordinate location)
         {
-            Coordinate newPosition;
-            if (currentPosition.y + 1 >= height)
+            MarkAsVisited(newPosition);
+            location = RecursiveMaze(newPosition);
+
+            if (location.Equals(_maze.End))
             {
-                newPosition = new Coordinate(currentPosition.x, 0);
-            }
-            else
-            {
-                newPosition = new Coordinate(currentPosition.x, currentPosition.y + 1);
-            }
-
-            return NextMove(end, width, height, structure, path, newPosition);
-        }
-
-        private bool MoveDown(Coordinate currentPosition, Coordinate end, int width, int height,
-            List<List<int>> structure, List<Coordinate> path)
-        {
-            Coordinate newPosition;
-            if (currentPosition.y - 1 < 0)
-            {
-                newPosition = new Coordinate(currentPosition.x, height);
-            }
-            else
-            {
-                newPosition = new Coordinate(currentPosition.x, currentPosition.y - 1);
-            }
-
-            return NextMove(end, width, height, structure, path, newPosition);
-        }
-
-        private bool MoveRight(Coordinate currentPosition, Coordinate end, int width, int height,
-            List<List<int>> structure, List<Coordinate> path)
-        {
-            Coordinate newPosition;
-            if (currentPosition.x + 1 >= width)
-            {
-                newPosition = new Coordinate(0, currentPosition.y);
-            }
-            else
-            {
-                newPosition = new Coordinate(currentPosition.x + 1, currentPosition.y);
-            }
-
-            return NextMove(end, width, height, structure, path, newPosition);
-        }
-
-        private bool MoveLeft(Coordinate currentPosition, Coordinate end, int width, int height,
-            List<List<int>> structure, List<Coordinate> path)
-        {
-            Coordinate newPosition;
-            if (currentPosition.x - 1 < 0)
-            {
-                newPosition = new Coordinate(width, currentPosition.y);
-            }
-            else
-            {
-                newPosition = new Coordinate(currentPosition.x - 1, currentPosition.y);
-            }
-
-            return NextMove(end, width, height, structure, path, newPosition);
-        }
-
-        private bool NextMove(Coordinate end, int width, int height, List<List<int>> structure, List<Coordinate> path, Coordinate newPosition)
-        {
-            if (!IsValidPosition(structure, path, newPosition)) return false;
-
-            path.Add(newPosition);
-
-            if (newPosition.Equals(end))
                 return true;
+            }
 
-            var finished = MoveUp(newPosition, end, width, height, structure, path);
-            if (finished)
-                return true;
+            RemoveMark(newPosition);
+            return false;
+        }
 
-            path.Remove(newPosition);
+        private void RemoveMark(Coordinate newPosition)
+        {
+            _maze.Structure[newPosition.y][newPosition.x] = 0;
+        }
 
-            finished = MoveDown(newPosition, end, width, height, structure, path);
-            if (finished)
-                return true;
+        private void MarkAsVisited(Coordinate currentLocation)
+        {
+            _maze.Structure[currentLocation.y][currentLocation.x] = -1;
+        }
 
-            finished = MoveRight(newPosition, end, width, height, structure, path);
-            if (finished)
-                return true;
+        private bool UpIsValid(Coordinate currentLocation)
+        {
+            return UpIsNotWall(currentLocation) && UpIsUnVisited(currentLocation);
+        }
 
-            finished = MoveLeft(newPosition, end, width, height, structure, path);
-            if (finished)
+        private bool UpIsUnVisited(Coordinate currentLocation)
+        {
+            if (_maze.Structure[currentLocation.y + 1][currentLocation.x] == 0)
                 return true;
 
             return false;
         }
 
-        private bool IsValidPosition(List<List<int>> structure, List<Coordinate> path, Coordinate newPosition)
+        private bool UpIsNotWall(Coordinate currentLocation)
         {
-            if (newPosition.Equals(_maze.Start))
+            if (_maze.Structure[currentLocation.y + 1][currentLocation.x] == 1)
                 return false;
 
-            if (newPosition.IsWall(structure))
+            return true;
+        }
+
+        private bool DownIsValid(Coordinate currentLocation)
+        {
+            return DownIsNotWall(currentLocation) && DownIsUnVisited(currentLocation);
+        }
+
+        private bool DownIsUnVisited(Coordinate currentLocation)
+        {
+            if (_maze.Structure[currentLocation.y - 1][currentLocation.x] == 0)
+                return true;
+
+            return false;
+        }
+
+        private bool DownIsNotWall(Coordinate currentLocation)
+        {
+            if (_maze.Structure[currentLocation.y - 1][currentLocation.x] == 1)
                 return false;
 
-            var origin = path.LastOrDefault();
-            if (newPosition.Equals(origin))
+            return true;
+        }
+
+        private bool RightIsValid(Coordinate currentLocation)
+        {
+            return RightIsNotWall(currentLocation) && RightIsUnVisited(currentLocation);
+        }
+
+        private bool RightIsUnVisited(Coordinate currentLocation)
+        {
+            if (_maze.Structure[currentLocation.y][currentLocation.x + 1] == 0)
+                return true;
+
+            return false;
+        }
+
+        private bool RightIsNotWall(Coordinate currentLocation)
+        {
+            if (_maze.Structure[currentLocation.y][currentLocation.x + 1] == 1)
                 return false;
+
+            return true;
+        }
+
+        private bool LeftIsValid(Coordinate currentLocation)
+        {
+            return LeftIsNotWall(currentLocation) && LeftIsUnVisited(currentLocation);
+        }
+
+        private bool LeftIsUnVisited(Coordinate currentLocation)
+        {
+            if (_maze.Structure[currentLocation.y][currentLocation.x - 1] == 0)
+                return true;
+
+            return false;
+        }
+
+        private bool LeftIsNotWall(Coordinate currentLocation)
+        {
+            if (_maze.Structure[currentLocation.y][currentLocation.x - 1] == 1)
+                return false;
+
             return true;
         }
     }

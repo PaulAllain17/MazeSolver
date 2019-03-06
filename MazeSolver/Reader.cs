@@ -13,13 +13,8 @@ namespace MazeSolver
             return CreateMaze(lines);
         }
 
-        public void Display(List<Coordinate> path, Maze maze)
+        public void Display(Maze maze)
         {
-            foreach (var point in path)
-            {
-                maze.Structure[point.y][point.x] = 2;
-            }
-
             maze.Structure[maze.Start.y][maze.Start.x] = 3;
             maze.Structure[maze.End.y][maze.End.x] = 4;
 
@@ -35,9 +30,6 @@ namespace MazeSolver
                         case 1:
                             Console.Write("#");
                             break;
-                        case 2:
-                            Console.Write("X");
-                            break;
                         case 3:
                             Console.Write("S");
                             break;
@@ -45,38 +37,7 @@ namespace MazeSolver
                             Console.Write("E");
                             break;
                         case -1:
-                            Console.Write("T");
-                            break;
-                        default:
-                            break;
-                    }
-                }
-                Console.WriteLine();
-            }
-        }
-
-        public void DisplayMaze(List<Coordinate> path, Maze maze)
-        {
-            for (var y = 0; y < maze.Height; y++)
-            {
-                for (var x = 0; x < maze.Width; x++)
-                {
-                    switch (maze.Structure[y][x])
-                    {
-                        case 0:
-                            Console.Write(" ");
-                            break;
-                        case 1:
-                            Console.Write("#");
-                            break;
-                        case 2:
                             Console.Write("X");
-                            break;
-                        case 3:
-                            Console.Write("S");
-                            break;
-                        case 4:
-                            Console.Write("E");
                             break;
                         default:
                             break;
