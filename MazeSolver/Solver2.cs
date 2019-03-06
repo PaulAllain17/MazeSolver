@@ -35,6 +35,7 @@ namespace MazeSolver
                 var location = RecursiveMaze(newPosition);
                 if (location.Equals(_maze.End))
                     return location;
+                RemoveMark(newPosition);
             }
 
             if (DownIsValid(currentLocation))
@@ -44,6 +45,7 @@ namespace MazeSolver
                 var location = RecursiveMaze(newPosition);
                 if (location.Equals(_maze.End))
                     return location;
+                RemoveMark(newPosition);
             }
 
             if (RightIsValid(currentLocation))
@@ -53,6 +55,7 @@ namespace MazeSolver
                 var location = RecursiveMaze(newPosition);
                 if (location.Equals(_maze.End))
                     return location;
+                RemoveMark(newPosition);
             }
 
             //_reader.Display(new List<Coordinate>(), _maze);
@@ -64,11 +67,15 @@ namespace MazeSolver
                 var location = RecursiveMaze(newPosition);
                 if (location.Equals(_maze.End))
                     return location;
+                RemoveMark(newPosition);
             }
 
-            //_reader.Display(new List<Coordinate>(), _maze);
-
             return currentLocation;
+        }
+
+        private void RemoveMark(Coordinate newPosition)
+        {
+            _maze.Structure[newPosition.y][newPosition.x] = 0;
         }
 
         private void MarkAsVisited(Coordinate currentLocation)
