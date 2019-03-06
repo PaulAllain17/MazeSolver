@@ -28,5 +28,25 @@ namespace MazeSolver
 
             return false;
         }
+
+        public void Up()
+        {
+            y += 1;
+        }
+
+        public void Down()
+        {
+            y -= 1;
+        }
+
+        public void Right()
+        {
+            x += 1;
+        }
+
+        public void Left()
+        {
+            x -= 1;
+        }
     }
 }

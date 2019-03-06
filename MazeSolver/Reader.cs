@@ -9,7 +9,7 @@ namespace MazeSolver
     {
         public Maze ReadFile()
         {
-            var lines = File.ReadLines("../.././Samples/small_input.txt").ToList();
+            var lines = File.ReadLines("../.././Samples/medium_input.txt").ToList();
             return CreateMaze(lines);
         }
 
@@ -43,6 +43,9 @@ namespace MazeSolver
                             break;
                         case 4:
                             Console.Write("E");
+                            break;
+                        case -1:
+                            Console.Write("T");
                             break;
                         default:
                             break;
