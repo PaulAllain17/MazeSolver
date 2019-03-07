@@ -9,14 +9,14 @@ namespace MazeSolver
     {
         public Maze ReadFile()
         {
-            var lines = File.ReadLines("../.././Samples/small_input.txt").ToList();
+            var lines = File.ReadLines("../.././Samples/medium_input.txt").ToList();
             return CreateMaze(lines);
         }
 
         public void Display(Maze maze)
         {
-            maze.Structure[maze.Start.y][maze.Start.x] = 3;
-            maze.Structure[maze.End.y][maze.End.x] = 4;
+            maze.Structure[maze.Start.y][maze.Start.x] = 2;
+            maze.Structure[maze.End.y][maze.End.x] = 3;
 
             for (var y = 0; y < maze.Height; y++)
             {
@@ -30,10 +30,10 @@ namespace MazeSolver
                         case 1:
                             Console.Write("#");
                             break;
-                        case 3:
+                        case 2:
                             Console.Write("S");
                             break;
-                        case 4:
+                        case 3:
                             Console.Write("E");
                             break;
                         case -1:

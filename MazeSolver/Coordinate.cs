@@ -29,24 +29,36 @@ namespace MazeSolver
             return false;
         }
 
-        public Coordinate Up()
+        public Coordinate Up(int mazeHeight)
         {
-            return new Coordinate(x, y + 1);
+            var newY = y + 1;
+            if (newY >= mazeHeight)
+                newY = 0;
+            return new Coordinate(x, newY);
         }
 
-        public Coordinate Down()
+        public Coordinate Down(int mazeHeight)
         {
-            return new Coordinate(x, y - 1);
+            var newY = y - 1;
+            if (newY < 0)
+                newY = mazeHeight - 1;
+            return new Coordinate(x, newY);
         }
 
-        public Coordinate Right()
+        public Coordinate Right(int mazeWidth)
         {
-            return new Coordinate(x + 1, y);
+            var newX = x + 1;
+            if (newX >= mazeWidth)
+                newX = 0;
+            return new Coordinate(newX, y);
         }
 
-        public Coordinate Left()
+        public Coordinate Left(int mazeWidth)
         {
-            return new Coordinate(x - 1, y);
+            var newX = x - 1;
+            if (newX < 0)
+                newX = mazeWidth - 1;
+            return new Coordinate(newX, y);
         }
     }
 }

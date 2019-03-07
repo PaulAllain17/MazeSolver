@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-
-namespace MazeSolver
+﻿namespace MazeSolver
 {
     public class Solver
     {
@@ -22,16 +20,16 @@ namespace MazeSolver
             if (currentLocation.Equals(_maze.End))
                 return currentLocation;
 
-            var newPosition = currentLocation.Up();
+            var newPosition = currentLocation.Up(_maze.Height);
             if (Move(newPosition, out var location)) return location;
 
-            newPosition = currentLocation.Down();
+            newPosition = currentLocation.Down(_maze.Height);
             if (Move(newPosition, out location)) return location;
 
-            newPosition = currentLocation.Right();
+            newPosition = currentLocation.Right(_maze.Width);
             if (Move(newPosition, out location)) return location;
 
-            newPosition = currentLocation.Left();
+            newPosition = currentLocation.Left(_maze.Width);
             if (Move(newPosition, out location)) return location;
 
             return currentLocation;
