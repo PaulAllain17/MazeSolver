@@ -60,6 +60,7 @@
     <Content Include="Samples\input.txt" />
     <Content Include="Samples\large_input.txt" />
     <Content Include="Samples\medium_input.txt" />
+    <Content Include="Samples\notSolvable.txt" />
     <Content Include="Samples\small_input.txt" />
     <Content Include="Samples\small_wrap_input.txt" />
     <Content Include="Samples\sparse_large.txt" />

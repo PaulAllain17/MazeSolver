@@ -9,10 +9,10 @@
             _maze = maze;
         }
 
-        public void Solve()
+        public Coordinate Solve()
         {
             MarkAsVisited(_maze.Start);
-            var location = RecursiveMaze(_maze.Start);
+            return RecursiveMaze(_maze.Start);
         }
 
         private Coordinate RecursiveMaze(Coordinate currentLocation)

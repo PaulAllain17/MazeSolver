@@ -12,11 +12,11 @@ namespace MazeSolver
             {
                 Console.WriteLine("Type file path of your maze:");
                 var filePath = Console.ReadLine();
-                Console.WriteLine();
 
                 var lines = Reader.ReadFile(filePath);
                 if (lines.Count == 0)
                 {
+                    Console.WriteLine();
                     Console.WriteLine("Could not read your file, make sure the path is correct.");
                     Console.WriteLine();
                     continue;
@@ -24,7 +24,17 @@ namespace MazeSolver
 
                 var maze = Formatter.CreateMaze(lines);
                 var solver = new Solver(maze);
-                solver.Solve();
+                var result = solver.Solve();
+
+                if (!result.Equals(maze.End))
+                {
+                    Console.WriteLine();
+                    Console.WriteLine("Your maze could not be solved!");
+                    Console.WriteLine();
+                    continue;
+                }
+
+                Console.WriteLine();
                 Layout.Display(maze);
 
                 Console.WriteLine();
