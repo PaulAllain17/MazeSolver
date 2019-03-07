@@ -44,6 +44,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Coordinate.cs" />
+    <Compile Include="Formatter.cs" />
+    <Compile Include="Layout.cs" />
     <Compile Include="Maze.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

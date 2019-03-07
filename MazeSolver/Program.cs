@@ -22,10 +22,10 @@ namespace MazeSolver
                     continue;
                 }
 
-                var maze = Reader.CreateMaze(lines);
+                var maze = Formatter.CreateMaze(lines);
                 var solver = new Solver(maze);
                 solver.Solve();
-                Reader.Display(maze);
+                Layout.Display(maze);
 
                 Console.WriteLine();
                 Console.WriteLine("Your maze has been solved!");
