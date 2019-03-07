@@ -13,7 +13,7 @@ namespace MazeSolver
             Console.WriteLine($"End: {maze.End.x} {maze.End.y}");
 
             var solver = new Solver(maze);
-            var path = solver.Solve();
+            solver.Solve();
             Console.WriteLine();
             reader.Display(maze);
             Console.WriteLine("Type key to exit.");
