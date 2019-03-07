@@ -5,15 +5,24 @@ using System.Linq;
 
 namespace MazeSolver
 {
-    public class Reader : IDisposable
+    public class Reader
     {
-        public Maze ReadFile()
+        public static List<string> ReadFile(string path)
         {
-            var lines = File.ReadLines("../.././Samples/medium_input.txt").ToList();
-            return CreateMaze(lines);
+            List<string> lines;
+            try
+            {
+                lines = File.ReadLines(path).ToList();
+            }
+            catch
+            {
+                return new List<string>();
+            }
+
+            return lines;
         }
 
-        public void Display(Maze maze)
+        public static void Display(Maze maze)
         {
             maze.Structure[maze.Start.y][maze.Start.x] = 2;
             maze.Structure[maze.End.y][maze.End.x] = 3;
@@ -47,7 +56,7 @@ namespace MazeSolver
             }
         }
 
-        private static Maze CreateMaze(List<string> lines)
+        public static Maze CreateMaze(List<string> lines)
         {
             var size = lines[0].Split(' ');
             var width = int.Parse(size[0]);
@@ -79,11 +88,6 @@ namespace MazeSolver
 
                 maze.Structure.Add(row);
             }
-        }
-
-        public void Dispose()
-        {
-            throw new NotImplementedException();
         }
     }
 }

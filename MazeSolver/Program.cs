@@ -8,15 +8,29 @@ namespace MazeSolver
         {
             Console.WindowWidth = 200;
 
-            var reader = new Reader();
-            var maze = reader.ReadFile();
-            var solver = new Solver(maze);
-            solver.Solve();
-            reader.Display(maze);
+            while (true)
+            {
+                Console.WriteLine("Type file path of your maze:");
+                var filePath = Console.ReadLine();
+                Console.WriteLine();
 
-            Console.WriteLine();
-            Console.WriteLine("Type key to exit.");
-            Console.ReadKey();
+                var lines = Reader.ReadFile(filePath);
+                if (lines.Count == 0)
+                {
+                    Console.WriteLine("Could not read your file, make sure the path is correct.");
+                    Console.WriteLine();
+                    continue;
+                }
+
+                var maze = Reader.CreateMaze(lines);
+                var solver = new Solver(maze);
+                solver.Solve();
+                Reader.Display(maze);
+
+                Console.WriteLine();
+                Console.WriteLine("Your maze has been solved!");
+                Console.WriteLine();
+            }
         }
     }
 }
