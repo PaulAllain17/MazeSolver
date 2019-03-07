@@ -23,43 +23,38 @@ namespace MazeSolver
                 return currentLocation;
 
             var newPosition = currentLocation.Up();
-            if (IsValid(newPosition))
-            {
-                if (Move(newPosition, out var location)) return location;
-            }
+            if (Move(newPosition, out var location)) return location;
 
             newPosition = currentLocation.Down();
-            if (IsValid(newPosition))
-            {
-                if (Move(newPosition, out var location)) return location;
-            }
+            if (Move(newPosition, out location)) return location;
 
             newPosition = currentLocation.Right();
-            if (IsValid(newPosition))
-            {
-                if (Move(newPosition, out var location)) return location;
-            }
+            if (Move(newPosition, out location)) return location;
 
             newPosition = currentLocation.Left();
-            if (IsValid(newPosition))
-            {
-                if (Move(newPosition, out var location)) return location;
-            }
+            if (Move(newPosition, out location)) return location;
 
             return currentLocation;
         }
 
         private bool Move(Coordinate newPosition, out Coordinate location)
         {
-            MarkAsVisited(newPosition);
-            location = RecursiveMaze(newPosition);
+            location = new Coordinate();
 
-            if (location.Equals(_maze.End))
+            if (IsValid(newPosition))
             {
-                return true;
+                MarkAsVisited(newPosition);
+                location = RecursiveMaze(newPosition);
+
+                if (location.Equals(_maze.End))
+                {
+                    return true;
+                }
+
+                RemoveMark(newPosition);
+                return false;
             }
 
-            RemoveMark(newPosition);
             return false;
         }
 
