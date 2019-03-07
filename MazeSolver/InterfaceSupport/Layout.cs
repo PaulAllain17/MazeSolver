@@ -37,5 +37,12 @@ namespace MazeSolver
                 Console.WriteLine();
             }
         }
+
+        public static void Write(string text)
+        {
+            Console.WriteLine();
+            Console.WriteLine(text);
+            Console.WriteLine();
+        }
     }
 }
